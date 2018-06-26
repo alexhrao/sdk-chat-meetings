@@ -1,3 +1,5 @@
+  <img width="653" alt="927" src="https://user-images.githubusercontent.com/39812727/41943679-3149a2a8-7959-11e8-9827-4ebecd08ad52.png">
+
 # bluejeans-chat-sdk
 this SDK enables users to easily integrate the bluejeans chat feature into any application
 
