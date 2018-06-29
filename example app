@@ -27,6 +27,7 @@ function kp() {
 		                word = word + key.sequence;
 			        process.stdout.write(key.sequence);
 			    }
+			break;
 			case 'return':
     			    chatz.sendMessage(word);
     			    word = "";
@@ -37,11 +38,11 @@ function kp() {
 			    process.stdout.clearLine();
 			    process.stdout.cursorTo(0);
 			    process.stdout.write(word);
-			    break;
+			break;
 			case 'space':
 			    word = word + " ";
 			    process.stdout.write(" ");
-			    break;
+			break;
 			default:
 			    word = word + key.sequence;
 			    process.stdout.write(key.sequence);
