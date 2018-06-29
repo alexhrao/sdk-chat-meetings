@@ -41,12 +41,12 @@ function chatSDK(){
 			return this.myMeetingEvents;
 		},
 
-		connectToMeeting: function(meeting_id){
+		connectToMeeting: function(meeting_id,meeting_passcode){
 
 			var oauthRec = {
 	 			grant_type :"meeting_passcode",
 	 			meetingNumericId : meeting_id,
-				meetingPasscode : ""
+				meetingPasscode : meeting_passcode
 			};
 
 			var uri = "api.bluejeans.com";
