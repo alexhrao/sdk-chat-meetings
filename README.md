@@ -9,7 +9,7 @@ To use the library locally without publishing to a remote npm registry, first in
 npm install
 
 # Getting Started
-Please follow the installation instructions, create a BlueJeans meeting using our API, obtain the meeting ID, and execute the following JS code:
+Please follow the installation instructions, create a BlueJeans meeting using our API, obtain the meeting ID and passcode (if one exists), and execute the following JS code:
 
 var handler = {
 
@@ -26,11 +26,15 @@ var chatModule = require('./chatSDK.js');
 
 var meetingID = "123456789";
 
+var meetingPasscode = "2039";//if there is no meeting passcode, it can be omitted from the connectToMeeting call as seen below
+
 var chatz = new chatModule.chatSDK();
 
 chatz.onReceiveMessage(handler);
 
-chatz.connectToMeeting(meetingID);
+chatz.connectToMeeting(meetingID,meetingPasscode);
+//if there is no meeting passcode, the call would look like below
+//chatz.connectToMeeting(meetingID);
 
 Here, the handler is the function that will be called when a message is received.
 
