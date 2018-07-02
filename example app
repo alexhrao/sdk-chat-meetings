@@ -49,8 +49,9 @@ function kp() {
 		}
 	});
 }
-
+var meetingID = "990842284";
+var meetingPasscode = "1234";
 var chatz = new chatModule.chatSDK();
 chatz.onReceiveMessage(handler);
-chatz.connectToMeeting("990842284");
+chatz.connectToMeeting(meetingID,meetingPasscode);
 kp();
