@@ -1,5 +1,6 @@
 //this is a chat app that uses bluejeans chatSDK to send messages over the command line. any app that uses this format will be able to 
-//connect to a bluejeans meeting assuming that the meeting is live and the ID number is known
+//connect to a bluejeans meeting assuming that the meeting is live and the meeting ID number is known as well as the meeting passcode
+//if one exists
 
 var chatModule = require('./chatSDK.js');
 readline = require('readline');
