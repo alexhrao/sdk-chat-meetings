@@ -95,9 +95,20 @@ function chatSDK(){
                 	msg: message
                 	});
 
-		}
+		},
+		
+		sendPrivateMessage: function(message,endpoint){
 
+			this.myMeetingEvents.sendEvent("meeting.private.msg", {
+   					
+   			msg: message,
+   			receiver: {
+       				guid: endpoint
+   			}
+			});	
+		}
 	});
+	
 	return new ChatSDK;
 }
 
