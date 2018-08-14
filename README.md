@@ -48,6 +48,7 @@ var message = "Welcome to the Chat!";
 
 chatz.sendMessage(message);
 ```
+If one wanted to send a private message to a specific user, the method sendPrivateMessage(message,endpoint) can be used. 
 
 # Terminate
 `chatz.disconnect()` will disconnect from the bluejeans meeting and no messages will be sent or received until it is reconnected.
