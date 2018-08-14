@@ -34,6 +34,7 @@ function chatSDK(){
 
 			this.myMeetingEvents.registerHandler(handler, 'meeting.register.error');   
 			this.myMeetingEvents.registerHandler(handler, 'meeting.chat');
+			this.myMeetingEvents.registerHandler(handler, 'meeting.private');
 
 		},
 
