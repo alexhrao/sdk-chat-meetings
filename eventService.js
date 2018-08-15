@@ -116,7 +116,7 @@ function eventService() //_, my, sockjs)
                     return;
                 }
                  
-                options.events = ['meeting', 'chat'];
+                options.events = ['meeting', 'chat','private_chat'];
                 self.sendEvent('meeting.register', options);
                 invokeIfImplemented(_.values(self.handlers), "onOpen", self.meetingAccessToken);
                 self.reconnects = 0;
