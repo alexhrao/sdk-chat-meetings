@@ -32,7 +32,6 @@ function chatSDK(){
 
 		onReceiveMessage: function(handler){
 
-			this.myMeetingEvents.registerHandler(handler, 'meeting.register.error');   
 			this.myMeetingEvents.registerHandler(handler, 'meeting.chat');
 			this.myMeetingEvents.registerHandler(handler, 'meeting.private');
 
@@ -42,40 +41,54 @@ function chatSDK(){
 			return this.myMeetingEvents;
 		},
 
-		connectToMeeting: function(meeting_id,meeting_passcode){
+		connectToMeeting: function(connectOpts) {
 
-			var oauthRec = {
+			var meetingId = connectOpts.meetingId
+			var meetingPasscode = connectOpts.meetingPasscode
+			var name = connectOpts.name
+
+			if (!meetingId) {
+				console.log("ERROR: Missing required parameter: meetingId")
+				return
+			}
+
+			if (!name) {
+				console.log("ERROR: Missing required parameter: name")
+				return
+			}
+
+
+			var aggregateApiRequest = {
 	 			grant_type :"meeting_passcode",
-	 			meetingNumericId : meeting_id,
-				meetingPasscode : meeting_passcode
+	 			meetingNumericId : meetingId,
+				meetingPasscode : meetingPasscode
 			};
 
 			var uri = "api.bluejeans.com";
-			var authPath = "/oauth2/token?meeting_id";
+			var authPath = "/v1/services/aggregator/meeting";
 
 			var meeting = this.myMeetingEvents;
 
-			auth.post( uri, authPath,oauthRec).then(function(results){
+			auth.post(uri, authPath, aggregateApiRequest).then(function(results){
 
-				var access_token = results.access_token;
-				var fields = results.scope.meeting.meetingUri.split("/");
-				var partition = results.scope.partitionName;
-				var user_id = fields[3];
+				var access_token = results.oauthInfo.access_token;
+				var leaderId = results.oauthInfo.scope.meeting.leaderId;
+				var eventServiceURL = results.meetingInfo.eventServiceURL;
 
 				if (meeting)
 				{
 					var opts =
 		 			{
-						'numeric_id': meeting_id,
+						'numeric_id': meetingId,
 						'access_token': access_token,
 						'user' : {
-						'full_name': 'Mr. Chat',
-						'is_leader': true
+							'full_name': name,
+							'is_leader': true
 						},
-						'leader_id': user_id,
+						'leader_id': leaderId,
 						'protocol': '2',
-						'endpointType': 'commandCenter',
-						'eventServiceUrl': 'https://bluejeans.com/' + partition + '/evt/v1/' + meeting_id
+						'endpointType': 'sdk',
+						'eventServiceUrl': eventServiceURL
 					};
 
 				meeting.setUpSocket(opts);
@@ -93,18 +106,18 @@ function chatSDK(){
 		sendMessage: function(message){
 
 			this.myMeetingEvents.sendEvent("meeting.chat.msg", {
-                	msg: message
-                	});
+        		msg: message
+        	});
 
 		},
 		
-		sendPrivateMessage: function(message,endpoint){
+		sendPrivateMessage: function(message, chatGuid){
 
 			this.myMeetingEvents.sendEvent("meeting.private.msg", {
    					
    			msg: message,
    			receiver: {
-       				guid: endpoint
+       			guid:  chatGuid
    			}
 			});	
 		}

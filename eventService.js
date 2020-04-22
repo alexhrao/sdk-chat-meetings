@@ -23,7 +23,8 @@ function eventService() //_, my, sockjs)
                 "guid_assigned": this.guidAssigned,
                 "remoteclose": this.remoteclose,
                 "pairingError": this.pairingError,
-                "kicked": this.kicked
+                "kicked": this.kicked,
+                "error": this.registerError
             };
         },
 
@@ -237,6 +238,7 @@ function eventService() //_, my, sockjs)
 			this.statusMsg("(Evt Svc: connected) Endpt guid: " + event.seamGuid );
 			
             this.connected = true;
+            invokeIfImplemented(_.values(this.handlers), "onConnect", {participantGuid: event.seamGuid, chatGuid: event.guid});
             //cofa.skinny.instances.selfParticipant.set({id: event.seamGuid});
             //invokeIfImplemented(_.values(this.handlers), "onConnect");
             //window.Notifications.trigger('socket:connected');
@@ -305,7 +307,6 @@ function eventService() //_, my, sockjs)
 
         isJoinEvent: function(eventName)
         {
-			console.log("isJoinEvent(" + eventName +")");
             return eventName === 'meeting.register';
         },
 
@@ -357,6 +358,13 @@ function eventService() //_, my, sockjs)
             this.errMsg("Crashed");
             this._crashed = true;
             this._idleTimeout();
+        },
+
+        registerError: function(event) {
+            this.errMsg("Authentication failure");
+            this.sock._remoteclosed = true;
+            this.sock._kicked = true;
+            this.sock.close();
         }
     });
 
