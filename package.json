@@ -1,17 +1,33 @@
 {
-  "name": "sdk-chat-meetings",
+  "name": "bluejeans-chat-sdk",
   "version": "1.0.0",
-  "description": "SDK for easy chat integration with BlueJeans meetings",
-  "main": "index.js",
+  "description": "Simple SDK for interacting with BlueJeans in-session chat",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
-    "myclass": "^1.0.2",
-    "underscore": "^1.9.1",
     "sockjs-client": "^1.1.5"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {
+    "@types/node": "^14.14.7",
+    "@types/sockjs-client": "^1.1.1",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "eslint": "^7.13.0",
+    "typescript": "^4.0.5"
   },
-  "author": "William O'Gara",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint ./src/** --ext .ts",
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexhrao/sdk-chat-meetings.git"
+  },
+  "author": {
+    "name": "Alexander Rao",
+    "email": "alexhrao@gmail.com",
+    "url": "https://alexhrao.github.io"
+  },
   "license": "MIT"
 }
