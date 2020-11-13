@@ -64,7 +64,7 @@ export class ChatSDK {
                 return res;
             })
             .catch(err => {
-                console.log("Error! here: " + err);
+                errMsg(`Error! here: ${err}`);
                 process.exit(1);
             });
     }

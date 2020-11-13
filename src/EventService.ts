@@ -124,7 +124,6 @@ export class EventService {
                     } else {
                         const namespaces = Object.keys(this.handlers);
                         const hKey = namespaces.find(n => n.match('^' + n)?.length !== 0);
-                        console.log()
                         if (hKey !== undefined) {
                             this.handlers[hKey]?.onMessage(event, data);
                         }

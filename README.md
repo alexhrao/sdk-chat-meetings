@@ -1,51 +1,35 @@
-  <img width="653" alt="927" src="https://user-images.githubusercontent.com/39812727/41943679-3149a2a8-7959-11e8-9827-4ebecd08ad52.png">
+# BlueJeans Chat SDK
 
-# bluejeans-chat-sdk
-this SDK enables users to easily integrate the bluejeans chat feature into any application
+Providing a simple, easy-to-integrate API for rich messages and interactions in ongoing BlueJeans meetings.
 
-# Installation
-To use the library locally without publishing to a remote npm registry, first install the dependencies by changing into the directory containing package.json (and this README). Then, in the command window, run:
+## Installation
 
-`npm install`
+Installation is simple via `npm`:
 
-# Getting Started
-Please follow the installation instructions, create a BlueJeans meeting using our API, obtain the meeting ID and passcode (if one exists), and execute the following JS code:
-
-```javascript
-var handler = {
-
-	onMessage: function(event, edata) {
-		console.log("Message Received: " + edata.body);
-	}
-		
-};
-
-var chatModule = require('./chatSDK.js');
-
-var meetingID = "123456789";
-
-var meetingPasscode = "1234";	//if there is no meeting passcode, it can be omitted from the connectToMeeting call as seen below
-
-var chatz = new chatModule.chatSDK();
-
-chatz.onReceiveMessage(handler);
-
-chatz.connectToMeeting({meetingID: meetingID, meetingPasscode: meetingPasscode, name: "A Chat Client"});
-//if there is no meeting passcode, the call would look like below
-//chatz.connectToMeeting({meetingID: meetingID, name: "A Chat Client"});
+``` shell
+npm i --save bluejeans-chat-sdk
 ```
 
-Here, the handler is the function that will be called when a message is received.
+## Usage
 
-# Once Set up
-After this code has been executed, one can now send messages to the chat using the sendMessage function with the message (string) as a parameter, for example:
+The API works on an asynchronous, "hook"-based method. You provide notification and message handlers to the SDK, and then connect. Your handlers are allowed to do whatever they want. A simple example is shown below:
 
-```javascript
-var message = "Welcome to the Chat!";
+``` typescript
+import { ChatSDK } from 'bluejeans-chat-sdk';
 
-chatz.sendMessage(message);
+const meetingId = '0123456789';
+const passcode = '1234';
+const sdk = new ChatSDK();
+
+sdk.onReceiveMessage((e, p) => console.log(`Message type ${e} Received!\n${p}`));
+sdk.connectToMeeting({ meetingId: meetingId, meetingPasscode: passcode, name: 'ChatBot' });
+// Once we connect, I can no longer add handlers
+sdk.sendMessage('Hello, World!');
 ```
-If one wanted to send a private message to a specific user, the method sendPrivateMessage(message, chatGuid) can be used. 
 
-# Terminate
-`chatz.disconnect()` will disconnect from the bluejeans meeting and no messages will be sent or received until it is reconnected.
+## Typing
+
+Typing is first-class, and all used types are exported. No extra packages are necessary!
+
+## Acknowledgements
+This is a forked version of the original SDK, found [here](https://github.com/bluejeans/sdk-chat-meetings).
