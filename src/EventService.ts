@@ -123,7 +123,7 @@ export class EventService {
                         this.events()[protocol]?.call(this, data);
                     } else {
                         const namespaces = Object.keys(this.handlers);
-                        const hKey = namespaces.find(n => n.match('^' + n)?.length !== 0);
+                        const hKey = namespaces.find(n => event.startsWith(n));
                         if (hKey !== undefined) {
                             this.handlers[hKey]?.onMessage(event, data);
                         }
