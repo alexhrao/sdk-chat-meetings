@@ -49,6 +49,7 @@ interface LeaderInfo {
     groups: string[];
     language: string;
     firstName: string;
+    lastName: string;
     timeFormat: number;
     attributes: unknown[];
     id: number;
